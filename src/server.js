@@ -8,6 +8,15 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 const http = require('http');
 const app = require('./app');
 const connectDB = require('./config/database');
+const agenda = require('./config/agenda');
+const deleteUnverifiedUsers = require('./jobs/deleteUnverifiedUsers');
+
+deleteUnverifiedUsers(agenda);
+
+agenda.on('ready', async () => {
+  await agenda.start();
+  await agenda.every('1 day', 'delete unverified users');
+});
 
 const PORT = process.env.PORT || 3000;
 

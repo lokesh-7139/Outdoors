@@ -38,9 +38,7 @@ module.exports = class prodEmail {
   }
 
   async sendDeletionDueToAbuseNotice() {
-    const mainContent = `We regret to inform you that your TopicThreads account has been deleted due to multiple failed verification attempts.
-              This action was taken to protect your data and maintain the security and integrity of our platform.
-              If you believe this was a mistake or if you would like to create a new account, you’re welcome to do so at any time.`;
+    const mainContent = '';
 
     await this.send(process.env.SENDGRID_ACC_DELETION_TEMPLATE_ID, {
       mainContent,
@@ -48,8 +46,7 @@ module.exports = class prodEmail {
   }
 
   async sendDeletionDueToInactiveNotice() {
-    const mainContent = `Your TopicThreads account has been deleted because it remained unverified for more than 10 days.
-                  If this was a mistake, you can sign up again at any time.`;
+    const mainContent = '';
 
     await this.send(process.env.SENDGRID_ACC_DELETION_TEMPLATE_ID, {
       mainContent,
