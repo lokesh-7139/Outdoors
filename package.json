@@ -1,11 +1,11 @@
 {
   "name": "outdoors",
   "version": "1.0.0",
-  "description": "Tours selling web project",
+  "description": "Backend API for a tour booking platform built with Node.js, Express, and MongoDB.",
   "main": "src/app.js",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "start:prod": "cross-env NODE_ENV=production nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "start": "cross-env NODE_ENV=production node src/server.js"
   },
   "author": "Lokesh Kollepara",
   "license": "ISC",
