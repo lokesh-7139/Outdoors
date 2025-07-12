@@ -1,5 +1,6 @@
 const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.isLeadGuideOfTour = catchAsync(async (req, res, next) => {
   const currentTour = await Tour.findById(req.params.id).setOptions({

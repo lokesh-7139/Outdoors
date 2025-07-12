@@ -3,10 +3,12 @@ const authMiddlewares = require('../middlewares/authMiddlewares');
 const tourMiddlewares = require('../middlewares/tourMiddlewares');
 const tourController = require('../controllers/tourController');
 const reviewRouter = require('../routes/reviewRoutes');
+const bookingRouter = require('../routes/bookingRoutes');
 
 const router = express.Router();
 
 router.use('/:tourId/reviews', reviewRouter);
+router.use('/:tourId/bookings', bookingRouter);
 
 router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')

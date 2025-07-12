@@ -6,12 +6,11 @@ const filterObj = require('../utils/filterObject');
 const getMissingFields = require('../utils/getMissingFields');
 
 exports.getReviews = catchAsync(async (req, res, next) => {
-  let filter = {};
-  if (req.params.tourId) {
-    filter = { tour: req.params.tourId };
-  }
   const features = new APIFeatures(
-    Review.find(filter).setOptions({ populateUser: true, populateTour: true }),
+    Review.find(req.reviewFilter).setOptions({
+      populateUser: true,
+      populateTour: true,
+    }),
     req.query
   )
     .filter()
@@ -31,7 +30,7 @@ exports.getReviews = catchAsync(async (req, res, next) => {
 
 exports.getReview = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(
-    Review.findById(req.params.id).setOptions({
+    Review.findById(req.reviewFilter).setOptions({
       populateUser: true,
       populateTour: true,
     }),
@@ -52,10 +51,6 @@ exports.getReview = catchAsync(async (req, res, next) => {
 });
 
 exports.createReview = catchAsync(async (req, res, next) => {
-  if (!req.body.tour) {
-    req.body.tour = req.params.tourId;
-  }
-  req.body.user = req.user.id;
   const requiredFields = ['review', 'rating', 'user', 'tour'];
   const filteredBody = filterObj(req.body, ...requiredFields);
   const missingFields = getMissingFields(filteredBody, ...requiredFields);

@@ -14,6 +14,7 @@ const meRouter = require('./routes/meRoutes');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const rateLimiters = require('./middlewares/rateLimiters');
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -53,7 +54,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  req.requestTime = new Date.now().toISOString();
+  req.requestTime = new Date().toISOString();
   next();
 });
 
@@ -62,6 +63,7 @@ app.use('/api/me', meRouter);
 app.use('/api/users', userRouter);
 app.use('/api/tours', tourRouter);
 app.use('/api/reviews', reviewRouter);
+app.use('/api/bookings', bookingRouter);
 
 app.use('/.well-known', (req, res, next) => {
   res.status(204).send();

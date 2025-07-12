@@ -25,7 +25,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 exports.deactivateMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(
     req.user.id,
-    { active: false },
+    { isActive: false },
     { runValidators: false }
   );
 

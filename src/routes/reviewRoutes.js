@@ -8,12 +8,17 @@ const router = express.Router({ mergeParams: true });
 router.use(authMiddlewares.protect);
 router
   .route('/')
-  .get(reviewController.getReviews)
-  .post(authMiddlewares.restrictTo('user'), reviewController.createReview);
+  .get(reviewMiddlewares.addReviewFilter, reviewController.getReviews)
+  .post(
+    authMiddlewares.restrictTo('user'),
+    reviewMiddlewares.modifyBody,
+    reviewMiddlewares.verifyTourBookingForReview,
+    reviewController.createReview
+  );
 
 router
   .route('/:id')
-  .get(reviewController.getReview)
+  .get(reviewMiddlewares.addReviewFilter, reviewController.getReview)
   .patch(
     authMiddlewares.restrictTo('user'),
     reviewMiddlewares.isUserOfReview,

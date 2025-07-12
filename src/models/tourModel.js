@@ -64,7 +64,27 @@ const tourSchema = new mongoose.Schema(
       required: [true, 'A tour must have a imageCover'],
     },
     images: [String],
-    startDates: [Date],
+    startDates: {
+      type: [Date],
+      required: [true, 'At least one start date is required'],
+      set: function (dates) {
+        return dates.sort((a, b) => new Date(a) - new Date(b));
+      },
+      validate: [
+        {
+          validator: function (dates) {
+            return dates.length > 0;
+          },
+          message: 'At least one start date is required.',
+        },
+        {
+          validator: function (dates) {
+            return dates[0] >= new Date();
+          },
+          message: 'The first start date must be in the future.',
+        },
+      ],
+    },
     startLocation: {
       type: {
         type: String,
@@ -146,6 +166,7 @@ tourSchema.pre(/^find/, function (next) {
       },
     });
   }
+  next();
 });
 
 tourSchema.pre(/^find/, function (next) {
